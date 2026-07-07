@@ -45,7 +45,21 @@
 
 ---
 
-## 5. `gws` の自動許可スコープ
+## 5. `gws` コマンド詳細
+
+`AGENTS.md` §20 の詳細である。書き込み系の事前確認ルールは `AGENTS.md` §20 を正本とする。
+
+- **基本形**: `gws <service> <resource> [sub-resource] <method> [--params JSON] [--json JSON]`
+- **例**:
+    - `gws drive files list --params '{"pageSize": 10}'`
+    - `gws gmail users messages list --params '{"userId": "me", "q": "is:unread"}'`
+    - `gws calendar events list --params '{"calendarId": "primary"}'`
+    - スキーマ確認: `gws schema drive.files.list`
+- **不明なメソッド**は `gws <service> --help` または `gws schema <service.resource.method>` を先に確認する。
+
+---
+
+## 6. `gws` の自動許可スコープ
 
 - Antigravity: `agy -p` 実行前に PilotBase の shell 承認を通す。
 - OpenCode: `~/.config/opencode/opencode.json` の `permission.bash` で `gws *list*` / `*get*` / `*search*` / `schema*` を `allow`、書き込み系は `ask`。

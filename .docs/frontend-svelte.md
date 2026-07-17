@@ -99,6 +99,9 @@ Shared は全層から参照可能
 | Infrastructure | API通信、外部I/O、ブラウザAPI |
 | Shared | 型、定数、共通関数 |
 
+空のパススルー処理を量産しない（`AGENTS.md` §7 依存方向）。
+変換も業務処理も無い単純な取得は、Application 層を薄いラッパー1関数に留めるか、State から Infrastructure を直接呼んでよい。ただし依存の一方向性と「Presentation から Infrastructure 直呼び禁止」は維持する。
+
 
 
 ---

@@ -10,8 +10,8 @@
 - OpenCode の MCP 設定: `~/.config/opencode/opencode.json` と選択 workspace root の `.mcp/settings.json`
 - OpenCode のユーザー共通 skill 配置先: `~/.config/opencode/skills`
 - OpenCode / Antigravity の project skill 配置先: 選択 workspace root の `skills/`
-- Antigravity の MCP 等の CLI 設定: `C:/Users/seizo/.gemini/settings.json` と選択 workspace root の `.mcp/settings.json`
-- Antigravity のユーザー共通 skill 配置先: `C:/Users/seizo/.gemini/skills`
+- Antigravity の MCP 等の CLI 設定: `~/.gemini/settings.json` と選択 workspace root の `.mcp/settings.json`
+- Antigravity のユーザー共通 skill 配置先: `~/.gemini/skills`
 
 ---
 
@@ -21,7 +21,7 @@
 | --- | --- | --- | --- |
 | Codex | Codex App Server | Frontend の `workspace_path` を使用 | workspace 基準 |
 | OpenCode | ローカル `opencode serve` + 公式 SDK `opencode-ai`（CLI を Backend が起動） | Frontend の `workspace_path` を使用 | tool / MCP は opencode CLI 標準設定に workspace `.mcp/settings.json` を merge。skills は `~/.config/opencode/skills` と workspace root `skills/` を利用 |
-| Antigravity | Antigravity CLI (`agy -p`) | Frontend の `workspace_path` を使用 | ターミナルの `agy -p` と同じユーザー設定（MCP 等は `C:/Users/seizo/.gemini/settings.json` に workspace `.mcp/settings.json` を merge、ユーザー共通 skills は `C:/Users/seizo/.gemini/skills`）と workspace root `skills/` を利用 |
+| Antigravity | Antigravity CLI (`agy -p`) | Frontend の `workspace_path` を使用 | ターミナルの `agy -p` と同じユーザー設定（MCP 等は `~/.gemini/settings.json` に workspace `.mcp/settings.json` を merge、ユーザー共通 skills は `~/.gemini/skills`）と workspace root `skills/` を利用 |
 
 ---
 
@@ -47,7 +47,7 @@
 
 ## 5. `gws` コマンド詳細
 
-`AGENTS.md` §20 の詳細である。書き込み系の事前確認ルールは `AGENTS.md` §20 を正本とする。
+`AGENTS.md` §18「Google Workspace CLI」の詳細である。書き込み系の事前確認ルールは同節を正本とする。
 
 - **基本形**: `gws <service> <resource> [sub-resource] <method> [--params JSON] [--json JSON]`
 - **例**:

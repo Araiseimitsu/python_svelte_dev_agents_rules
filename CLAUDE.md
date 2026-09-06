@@ -5,6 +5,6 @@ Claude Code は以下のインポートにより `AGENTS.md` を読み込み、�
 
 @AGENTS.md
 
-- ルールの追加・修正は `AGENTS.md` に対してのみ行う（本ファイルには内容を書かない）。
+- ルールの追加・修正は `AGENTS.md` または同ファイルが委ねる正本文書に行う（本ファイルには規則を重複記載しない）。
 - 開発プロセスの詳細は `.docs/workflow.md` を参照する。
 - フロントエンド作業時は `.docs/frontend-svelte.md` も参照する。

@@ -1,65 +1,27 @@
-# Provider MCP / Skills 連携仕様
+# 外部ツール・サービス連携
 
-このファイルは、Codex / OpenCode / Antigravity の CLI 連携を扱うプロジェクトでのみ参照する。
-共通ルールは `AGENTS.md` に従う。
+該当作業時だけ参照する。安全確認と委譲条件は `AGENTS.md` §14・§16 を正本とする。
 
----
+## 1. 利用手段の確認
 
-## 1. 設定ファイルの場所
+利用可能な専用ツール・コネクタ・CLI と既存の設定を確認し、目的に合う手段を選ぶ。ユーザーが手段を指定した場合はそれに従う。
+特定アプリのプロセス管理、個人環境のパス、認証方式を共通の前提にしない。設定の所在・コマンド仕様はインストール済みツールのヘルプや対象プロジェクトの文書で確認する。
+読み取りと書き込みを区別し、対象アカウント・リソースを確認する。秘密値を表示して認証確認しない。
 
-- OpenCode の MCP 設定: `~/.config/opencode/opencode.json` と選択 workspace root の `.mcp/settings.json`
-- OpenCode のユーザー共通 skill 配置先: `~/.config/opencode/skills`
-- OpenCode / Antigravity の project skill 配置先: 選択 workspace root の `skills/`
-- Antigravity の MCP 等の CLI 設定: `~/.gemini/settings.json` と選択 workspace root の `.mcp/settings.json`
-- Antigravity のユーザー共通 skill 配置先: `~/.gemini/skills`
+## 2. Google Workspace CLI（gws）
 
----
+使用前に利用可能性とヘルプを確認する。以下はコマンド形式の例であり、実際の対応メソッドと引数はヘルプ・スキーマで確認する。
 
-## 2. Provider 一覧
+```text
+gws --help
+gws schema drive.files.list
+gws drive files list --params '{"pageSize": 10}'
+```
 
-| provider | API 経路 | workspace | MCP / skills |
-| --- | --- | --- | --- |
-| Codex | Codex App Server | Frontend の `workspace_path` を使用 | workspace 基準 |
-| OpenCode | ローカル `opencode serve` + 公式 SDK `opencode-ai`（CLI を Backend が起動） | Frontend の `workspace_path` を使用 | tool / MCP は opencode CLI 標準設定に workspace `.mcp/settings.json` を merge。skills は `~/.config/opencode/skills` と workspace root `skills/` を利用 |
-| Antigravity | Antigravity CLI (`agy -p`) | Frontend の `workspace_path` を使用 | ターミナルの `agy -p` と同じユーザー設定（MCP 等は `~/.gemini/settings.json` に workspace `.mcp/settings.json` を merge、ユーザー共通 skills は `~/.gemini/skills`）と workspace root `skills/` を利用 |
+JSON 引数は実行シェルの引用規則に従う。送信・作成・更新・削除・共有は承認された対象と内容に限定し、実行後に結果を確認する。
+`*get*` や `*list*` などの部分文字列だけでコマンド全体を安全と判定したり、権限を自動設定したりしない。
 
----
+## 3. 外部 AI・CLI
 
-## 3. OpenCode 運用詳細
-
-- Frontend の `workspace_path` でローカル `opencode serve` を Backend が起動し、公式 SDK `opencode-ai` 経由で会話する（毎ターン新規 session を作成する stateless 運用）。
-- `opencode serve` は port 単位で常駐するため、Backend 管理の serve は workspace 変更時に停止して起動し直す。
-- 外部起動済みの serve は workspace を保証できないため、workspace 指定時は安全側で拒否する。
-- 認証は opencode CLI 標準に委譲する。API キーの env 設定は不要。
-- MCP は `~/.config/opencode/opencode.json` と選択 workspace root の `.mcp/settings.json` を起動時 config として merge する。
-- skills はユーザー共通 `~/.config/opencode/skills` と選択 workspace root の `skills/` を読む。
-- tool 実行（filesystem / MCP / document など）は opencode ネイティブに全委譲し、Backend 自前の tool ループは持たない。
-- Gemini API 直呼びは廃止し、旧 `gemini` / `gemini_cli` provider 入力は Antigravity に正規化する。
-
----
-
-## 4. MCP / skills のマージ規則
-
-- MCP は OpenCode / Antigravity 各 CLI の通常ユーザー設定を正本にしつつ、Frontend で選択した workspace root の `.mcp/settings.json` を project-level MCP として merge する。同名 MCP server は workspace 側を優先する。
-- skills は各 CLI のユーザー共通ディレクトリに加え、Frontend で選択した workspace root の `skills/` を project-level skill として読む。
-
----
-
-## 5. `gws` コマンド詳細
-
-`AGENTS.md` §18「Google Workspace CLI」の詳細である。書き込み系の事前確認ルールは同節を正本とする。
-
-- **基本形**: `gws <service> <resource> [sub-resource] <method> [--params JSON] [--json JSON]`
-- **例**:
-    - `gws drive files list --params '{"pageSize": 10}'`
-    - `gws gmail users messages list --params '{"userId": "me", "q": "is:unread"}'`
-    - `gws calendar events list --params '{"calendarId": "primary"}'`
-    - スキーマ確認: `gws schema drive.files.list`
-- **不明なメソッド**は `gws <service> --help` または `gws schema <service.resource.method>` を先に確認する。
-
----
-
-## 6. `gws` の自動許可スコープ
-
-- Antigravity: `agy -p` 実行前に PilotBase の shell 承認を通す。
-- OpenCode: `~/.config/opencode/opencode.json` の `permission.bash` で `gws *list*` / `*get*` / `*search*` / `schema*` を `allow`、書き込み系は `ask`。
+外部 AI への委譲は明示依頼時のみ。承認された範囲の必要な文脈だけを渡し、秘密情報や不要な個人情報を含めない。
+CLI の設定変更・サーバー起動が必要な場合は、対象プロジェクトの実装と実行環境から判断する。特定サービスの常駐方式や設定マージ処理を、汎用テンプレートから新設しない。

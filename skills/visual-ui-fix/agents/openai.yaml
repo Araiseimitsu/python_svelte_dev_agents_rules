@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual UI Fix"
+  short_description: "デスクトップ・CLIの視覚的な修正指示をUIコードへ反映・検証"
+  default_prompt: "$visual-ui-fix を使い、実ブラウザでローカル画面を開いて、確定したUI修正だけをコードへ反映してください。"

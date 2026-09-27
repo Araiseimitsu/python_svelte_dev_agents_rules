@@ -1,0 +1,4 @@
+interface:
+  display_name: "App Idea Map"
+  short_description: "曖昧なアプリ案を軽い対話と要件マップで具体化"
+  default_prompt: "$app-idea-map を使って、アプリや機能のアイデアを一問ずつ整理し、要件マップにしてください。"

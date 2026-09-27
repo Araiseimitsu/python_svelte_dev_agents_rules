@@ -49,8 +49,7 @@ project-root/
 ├─ docker/            # Docker を使う場合
 ├─ .docs/
 ├─ README.md
-├─ AGENTS.md
-└─ CLAUDE.md          # AGENTS.md への参照
+└─ AGENTS.md          # 全エージェント共通ルール（Claude Code も直接読む）
 ```
 
 実装コードをルート直下に置かない。設定・ドキュメント・起動スクリプトは例外とする。

@@ -1,5 +1,10 @@
 # 変更履歴
 
+## 2026-09-28 CLAUDE.md の廃止
+
+- Claude Code が `AGENTS.md` を直接読むようになった（v2.1.281 以降）ため、`@AGENTS.md` を読み込むだけだった `CLAUDE.md` を削除し、`AGENTS.md` だけで運用する形にした。
+- 注意: `CLAUDE.md` / `.claude/CLAUDE.md` / `CLAUDE.local.md` のいずれかがあると、既定設定では `AGENTS.md` が読まれなくなる。旧バージョンなど `AGENTS.md` を直接読めない環境では、`@AGENTS.md` だけを書いた `CLAUDE.md` を置く。
+
 ## 2026-09-07 承認範囲と通常作業の整理
 
 - 共通テンプレートの適用範囲を明確化し、新規の既定と既存プロジェクトの尊重を分離した。

@@ -3,13 +3,15 @@
     "deny": [
       "Read(**/node_modules/**)",
       "Read(**/.venv/**)",
+      "Read(**/venv/**)",
       "Read(**/dist/**)",
       "Read(**/build/**)",
-      "Read(**/.svelte-kit/**)",
+      "Read(**/target/**)",
       "Read(**/__pycache__/**)",
       "Read(**/.pytest_cache/**)",
       "Read(**/.mypy_cache/**)",
       "Read(**/.ruff_cache/**)",
+      "Read(**/.ipynb_checkpoints/**)",
       "Read(**/coverage/**)",
       "Read(**/htmlcov/**)"
     ]

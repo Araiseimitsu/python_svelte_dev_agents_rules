@@ -10,6 +10,7 @@
 | --- | --- |
 | 開発作業の着手時 | `.docs/memory/MEMORY.md`（索引から関連項目だけ） |
 | 手順・完了条件・Git | `.docs/workflow.md` |
+| スキルの参照 | `.agents/skills/` |
 | Backend | `.docs/backend-python.md` |
 | Frontend | `.docs/frontend-svelte.md` |
 | `.env` の作成・変更 | `.docs/env-examples.md` |
@@ -47,11 +48,12 @@ project-root/
 ├─ frontend/src/ frontend/tests/   # Svelte
 ├─ tests/                          # 統合・E2E・横断テスト
 ├─ docker/                         # Docker を使う場合
+├─ .agents/skills/                 # AI Agent 共通スキル
 ├─ .claude/settings.json           # Claude Code の共有設定（読み取り除外など）
 ├─ .docs/  README.md  AGENTS.md
 ```
 
-実装コードをルート直下に置かない（設定・文書・起動スクリプトは例外）。既存構成の一括移行はしない。既存構成内の小さな追加は通常作業、大規模な移設は §11 に従う。
+実装コードをルート直下に置かない（設定・文書・起動スクリプトは例外）。既存構成の一括移行はしない。既存構成内の小さな追加は通常作業、大規模な移設は §11 に従う。スキルは `.agents/skills/` に配置する。
 
 ## 5. 技術スタック
 
